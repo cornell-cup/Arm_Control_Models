@@ -10,7 +10,7 @@ zlabel('z')
 %tep=serial('COM5', 'BaudRate', 115200);
 
 %fopen(tep);
-makeLink0(handles.axes_arm, [.5 .5 .5]);
+makeLink0(handles.axes_arm, [.5 .5 .5]);  
 handles.user.link1Patch = makeLink1(handles.axes_arm, [.95 .95 .95]);
 handles.user.link1Vertices = get(handles.user.link1Patch, 'Vertices')';
 handles.user.link1Vertices(4,:) = ones(1, size(handles.user.link1Vertices,2));

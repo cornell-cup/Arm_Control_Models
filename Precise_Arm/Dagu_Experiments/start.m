@@ -2,12 +2,12 @@ clear all
 close all
 clc
 
-[handles]=init;
+%[handles]=init;
 %homeposition();
 i = 1;
 
 start1=[2.3400, 0.000, 6.330];
-goal=[9.3400, 5.000, 5.3];
+goal=[9.3400, 5.000, 9];
 out = min_jerk(start1,goal);
 
 count=0;
