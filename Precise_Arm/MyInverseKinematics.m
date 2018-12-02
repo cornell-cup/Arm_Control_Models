@@ -19,6 +19,7 @@ Armend = [12; 5];
 numpoints = 1000;
 MotorPos(:, 1) = [ShoulderAngle; ElbowAngle];
 
+%% Create the Path to Travel Along
 magchangex = Armend(1) - Armstart(1);
 magchangey = Armend(2) - Armstart(2);
 for j = 1:numpoints
@@ -28,7 +29,10 @@ for j = 1:numpoints
 end
 % Pointstocontroltox = linspace(Armstart(1), Armend(1), numpoints);
 % Pointstocontroltoy = linspace(Armstart(2), Armend(2), numpoints);
+% ControlPoints = MakeIanSux(start, width, height)
 ControlPoints = [Pointstocontroltox; Pointstocontroltoy];
+
+%% Do the control and dynamic simulation
 timestep = .01;
 ElbowPos(:, 1) = ElbowStart;
 ArmPos(:, 1) = Armstart;
