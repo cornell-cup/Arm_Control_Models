@@ -13,7 +13,7 @@ const int encoderA1 = 18;
 const int encoderB1 = 19;
 
 //Target position (in steps; CHANGE TO DEGREEES) for Motor 1
-int posDesired1 = -938; //1.5 scaling
+int posDesired1 = 0; //-938; //1.5 scaling
 
 //number of encoder counts in array (correspond to steps which correspond to position); EDIT TO MAKE A POSITION VARIABLE
 int encoderCount1 = 0;
@@ -33,7 +33,7 @@ const int encoderA2 = 20;
 const int encoderB2 = 21;
 
 //Target position (in steps; CHANGE TO DEGREEES) for Motor 1
-int posDesired2 = -893; //45 degrees; 1000 counts per rotation divided by 2???
+int posDesired2 = 0; //-893; //45 degrees; 1000 counts per rotation divided by 2???
 
 //number of encoder counts in array (correspond to steps which correspond to position); EDIT TO MAKE A POSITION VARIABLE
 int encoderCount2 = 0;
@@ -110,20 +110,81 @@ void senseEncoderA2(){
   }
 }
 
+int convertMotor1Pos(int pos1) {
+  return pos1*7500/360;
+}
+
+int convertMotor2Pos(int pos2) {
+  return pos2*5000/(0.7*360);
+}
 
 void loop() {  
 // Check if we have a serial command to write to a position from the Pi
 
-/*  if(Serial.available() > 0) {
+  if(Serial.available() > 0) {
 
     //Read our serial input until our end packet
     serialInfo = Serial.readStringUntil('E');
-    //Split up our received command into a character array; will need this to check which motor to command
-    serialInfo.toCharArray(command, 6);
+    
+  }
 
-    //Get our desired position ; note: current encoding assumption is M1DXXXE, meaning position is a degree value
-    posDesired = serialInfo.substring(3).toInt();
-*/
+  //Split up our received command into a character array; will need this to check which motor to command
+    serialInfo.toCharArray(command, 7);
+
+    //Get our desired position ; note: current encoding assumption is M(1/2)D(P/N)XXXE, meaning position is a degree value
+     if(command[1] == '1') {
+          if(command[2] == 'D') {
+            posDesired1 = serialInfo.substring(4).toInt();
+            //posDesired1 = convertMotor1Pos(posDesired1);
+            if(command[3] == 'N') {
+              posDesired1 = -1*posDesired1;
+            }
+           // Serial.print("PD1: ");
+            //Serial.println(posDesired1);
+          }
+      }
+      else if(command[1] == '2') {
+        if(command[2] == 'D'){
+            posDesired2 = serialInfo.substring(4).toInt();
+            //posDesired2 = convertMotor2Pos(posDesired2);
+            if(command[3] == 'N') {
+              posDesired2 = -1*posDesired2;
+            }
+            //Serial.print("PD2: ");
+            //Serial.println(posDesired2);
+        }
+      }
+      
+  // WITH DEGREES
+  /*
+    //Split up our received command into a character array; will need this to check which motor to command
+    serialInfo.toCharArray(command, 7);
+
+    //Get our desired position ; note: current encoding assumption is M(1/2)D(P/N)XXXE, meaning position is a degree value
+     if(command[1] == '1') {
+          if(command[2] == 'D') {
+            posDesired1 = serialInfo.substring(4).toInt();
+            posDesired1 = convertMotor1Pos(posDesired1);
+            if(command[3] == 'N') {
+              posDesired1 = -1*posDesired1;
+            }
+           // Serial.print("PD1: ");
+            //Serial.println(posDesired1);
+          }
+      }
+      else if(command[1] == '2') {
+        if(command[2] == 'D'){
+            posDesired2 = serialInfo.substring(4).toInt();
+            posDesired2 = convertMotor2Pos(posDesired2);
+            if(command[3] == 'N') {
+              posDesired2 = -1*posDesired2;
+            }
+            //Serial.print("PD2: ");
+            //Serial.println(posDesired2);
+        }
+      }
+
+      */
 
 //  //Move Motor 1
 //    if (posDesired1-EPSILON>encoderCount1){
@@ -200,6 +261,8 @@ void loop() {
           }
         }
     }
+    //Serial.print("Enc2: ");
+    //Serial.println(encoderCount2);
 //     delay(.05);
 //    Serial.println(encoderCount1);
     
