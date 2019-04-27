@@ -24,8 +24,8 @@ magchangex = Armend(1) - Armstart(1);
 magchangey = Armend(2) - Armstart(2);
 for j = 1:numpoints
     t = j/numpoints; % Function has to equal 1 when t is maxed out
-    Pointstocontroltox(j) = sin(j/numpoints*pi)*magchangex + Armstart(1);
-    Pointstocontroltoy(j) = (j/numpoints)^3*magchangey + Armstart(2);
+    Pointstocontroltox(j) = t*magchangex + Armstart(1);
+    Pointstocontroltoy(j) = t*magchangey + Armstart(2);
 end
 % Pointstocontroltox = linspace(Armstart(1), Armend(1), numpoints);
 % Pointstocontroltoy = linspace(Armstart(2), Armend(2), numpoints);
@@ -53,7 +53,7 @@ for i = 2:numpoints
     ArmPos(:, i) = ArmPosStep;
     
 end
-
+MotorPos(:, end)
 figure()
 axis equal
 hold on
