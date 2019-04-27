@@ -3,9 +3,9 @@ close all
 clear variables
 
 %% Initial Positions and Parameters
-ShoulderAngledeg = 40;
-ElbowAngledeg = 5;
-RotatorCuffAngledeg = 20;
+ShoulderAngledeg = -40;
+ElbowAngledeg = 30;
+RotatorCuffAngledeg = -20;
 L1 = 20;
 L2 = 25;
 

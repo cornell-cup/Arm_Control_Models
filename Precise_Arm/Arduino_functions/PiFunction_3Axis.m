@@ -1,5 +1,21 @@
 %% Perform Control in XYZ Frame
 function [FinalMotorControlAngles] = PiFunction_3Axis(ShoulderAngledeg, ElbowAngledeg, RotatorCuffAngledeg, L1, L2, goalx, goaly, goalz)
+%% Inputs:
+% ShoulderAngledeg: The starting angle in degrees of the shoulder servo
+% ElbowAngledeg: The starting angle in degrees of the elbow servo
+% RotatorCuffAngle: The starting angle in degrees of the rotator cuff
+% L1: The length of the upper arm (between pivot points), in inches
+% L2: The length of the lower arm (between pivot points), in inches
+% goalx: The x-coordinate of the goal point of the arm, in inches
+% goaly: The y-coordinate of the goal point of the arm, in inches
+% goalz: The z-coordinate of the goal point of the arm, in inches
+
+%% Outputs
+% FinalMotorControlAngles: A 3-value vector that contains the command
+% angles of the servos, in radians, in the order of shoulder angle, elbow
+% angle, and rotatorcuff angle
+
+%% Code
 %ShoulderAngledeg = 40;
 %ElbowAngledeg = 5;
 %RotatorCuffAngledeg = 20;
@@ -79,4 +95,4 @@ while norm(ArmPosStep-ControlPoints(:, i))>goaltolerance
     ElbowPos = [ElbowPos, ElbowPosStep];
     ArmPos = [ArmPos, ArmPosStep];
 end
-FinalMotorControlAngles = MotorPos(:, end);
+FinalMotorControlAngles = wrapToPi(MotorPos(:, end));
