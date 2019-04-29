@@ -1,0 +1,1 @@
+install apriltag==0.0.16
