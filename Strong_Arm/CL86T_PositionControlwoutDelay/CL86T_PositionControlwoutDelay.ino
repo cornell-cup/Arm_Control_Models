@@ -9,7 +9,7 @@ const int dirneg1 = 24;
 const int pulneg1 = 26;
 //Encoder A pin
 const int encoderA1 = 18;
-//Encoder B pine
+//Encoder B pin
 const int encoderB1 = 19;
 
 //Target position (in steps; CHANGE TO DEGREEES) for Motor 1
@@ -60,7 +60,7 @@ const int EPSILON = 1;
 int stepInterval = 500;
 
 //character array for our serial input command stream
-char command[7];
+char command[8];
 //what we get from the serial communication from the Pi
 String serialInfo;
 
@@ -82,9 +82,6 @@ void setup() {
   pinMode(encoderA2,INPUT);
   pinMode(encoderB2,INPUT);
 
-  encoderCount1 = 0;
-  encoderCount2 = 0;
-  
   //Begin Serial (for communication to the Pi)
   Serial.begin(9600);
 
@@ -128,13 +125,13 @@ void loop() {
 
     //Read our serial input until our end packet
     serialInfo = Serial.readStringUntil('E');
-    
+
   }
 
   //Split up our received command into a character array; will need this to check which motor to command
-    serialInfo.toCharArray(command, 7);
+    serialInfo.toCharArray(command, 8);
 
-    //Get our desired position ; note: current encoding assumption is M(1/2)D(P/N)XXXE, meaning position is a degree value
+    //Get our desired position ; note: current encoding assumption is M(1/2)D(P/N)XXXXE, meaning position is a degree value
      if(command[1] == '1') {
           if(command[2] == 'D') {
             posDesired1 = serialInfo.substring(4).toInt();
@@ -157,12 +154,11 @@ void loop() {
             //Serial.println(posDesired2);
         }
       }
-      
+
   // WITH DEGREES
   /*
     //Split up our received command into a character array; will need this to check which motor to command
-    serialInfo.toCharArray(command, 7);
-
+    serialInfo.toCharArray(command, 8);
     //Get our desired position ; note: current encoding assumption is M(1/2)D(P/N)XXXE, meaning position is a degree value
      if(command[1] == '1') {
           if(command[2] == 'D') {
@@ -186,7 +182,6 @@ void loop() {
             //Serial.println(posDesired2);
         }
       }
-
       */
 
 //  //Move Motor 1
@@ -220,10 +215,10 @@ void loop() {
 //      digitalWrite(pulneg2,LOW);
 //      delayMicroseconds(stepInterval);
 //    }
-    
-    
-    //posDesired2 = 595;
-    
+
+  //posDesired1 = 500;
+  //posDesired2 = 0;
+
   //  //steps motor and writes times of encoder pulses to
     currentMillis1 = currentMillis2 = micros();
     //these two if statements pulse the motor
@@ -268,8 +263,8 @@ void loop() {
         }
     }
     //Serial.print("Enc2: ");
-//    Serial.println(encoderCount2);
+    //Serial.println(encoderCount2);
 //     delay(.05);
 //    Serial.println(encoderCount1);
-    
+
 }
