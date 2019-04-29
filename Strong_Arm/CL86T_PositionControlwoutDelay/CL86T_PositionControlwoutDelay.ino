@@ -9,7 +9,7 @@ const int dirneg1 = 24;
 const int pulneg1 = 26;
 //Encoder A pin
 const int encoderA1 = 18;
-//Encoder B pin
+//Encoder B pine
 const int encoderB1 = 19;
 
 //Target position (in steps; CHANGE TO DEGREEES) for Motor 1
@@ -28,9 +28,9 @@ const int dirneg2 = 25;
 //Pulse pin
 const int pulneg2 = 27;
 //Encoder A pin
-const int encoderA2 = 20;
+const int encoderA2 = 2;
 //Encoder B pin
-const int encoderB2 = 21;
+const int encoderB2 = 3;
 
 //Target position (in steps; CHANGE TO DEGREEES) for Motor 1
 int posDesired2 = 0; //-893; //45 degrees; 1000 counts per rotation divided by 2???
@@ -60,7 +60,7 @@ const int EPSILON = 1;
 int stepInterval = 500;
 
 //character array for our serial input command stream
-char command[6];
+char command[7];
 //what we get from the serial communication from the Pi
 String serialInfo;
 
@@ -81,6 +81,9 @@ void setup() {
   pinMode(pulneg2,OUTPUT);
   pinMode(encoderA2,INPUT);
   pinMode(encoderB2,INPUT);
+
+  encoderCount1 = 0;
+  encoderCount2 = 0;
   
   //Begin Serial (for communication to the Pi)
   Serial.begin(9600);
@@ -218,6 +221,9 @@ void loop() {
 //      delayMicroseconds(stepInterval);
 //    }
     
+    
+    //posDesired2 = 595;
+    
   //  //steps motor and writes times of encoder pulses to
     currentMillis1 = currentMillis2 = micros();
     //these two if statements pulse the motor
@@ -262,7 +268,7 @@ void loop() {
         }
     }
     //Serial.print("Enc2: ");
-    //Serial.println(encoderCount2);
+//    Serial.println(encoderCount2);
 //     delay(.05);
 //    Serial.println(encoderCount1);
     
