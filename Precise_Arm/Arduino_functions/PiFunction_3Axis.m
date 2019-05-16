@@ -31,6 +31,8 @@ ElbowAngle = ElbowAngledeg/180*pi; % Elbow Angle is Measured CCW from Shoulder A
 RotatorCuffAngle = RotatorCuffAngledeg/180*pi; % Rotator Cuff Angle is measured counterclockwise from 
 
 [ElbowStart, ArmStart] = CalcArmPos3d([ShoulderAngle; ElbowAngle; RotatorCuffAngle], L1, L2);
+%disp(ElbowStart)
+%disp(ArmStart)
 ArmEnd = [goalx; goaly;goalz];
 MotorPos(:, 1) = [ShoulderAngle; ElbowAngle; RotatorCuffAngle];
 
@@ -96,3 +98,4 @@ while norm(ArmPosStep-ControlPoints(:, i))>goaltolerance
     ArmPos = [ArmPos, ArmPosStep];
 end
 FinalMotorControlAngles = wrapToPi(MotorPos(:, end));
+disp(FinalMotorControlAngles)

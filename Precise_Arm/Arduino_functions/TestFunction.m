@@ -3,22 +3,21 @@ close all
 clear variables
 
 %% Initial Positions and Parameters
-ShoulderAngledeg = -40;
-ElbowAngledeg = 30;
-RotatorCuffAngledeg = -20;
+RotatorCuffAngledeg = 25;
+ElbowAngledeg = -40;
+ShoulderAngledeg = 25;
 L1 = 20;
 L2 = 25;
-
 %% Target XYZ Position
-goalx = 5;
-goaly = 8;
-goalz = 12;
+goalx = 2;
+goaly = 10;
+goalz = 4;
 
 InitialMotorControlAngles = [ShoulderAngledeg; ElbowAngledeg; RotatorCuffAngledeg]/pi() * 180;
-disp(InitialMotorControlAngles/pi*180)
+%disp(InitialMotorControlAngles/pi*180)
 
 [FinalMotorControlAngles] = PiFunction_3Axis(ShoulderAngledeg, ElbowAngledeg, RotatorCuffAngledeg, L1, L2, goalx, goaly, goalz);
-disp(FinalMotorControlAngles/pi()*180)
+%disp(FinalMotorControlAngles/pi()*180)
 
 %% Make a Plot of the Results
 [XYZElbStart, XYZEndAffectStart] = CalcArmPos3d(InitialMotorControlAngles, L1, L2);
